@@ -26,6 +26,14 @@ const router = createRouter({
                     },
                 },
                 {
+                    path: "/fajalead/clientes",
+                    name: "clientes",
+                    component: () => import("@/views/fajalead/Clientes.vue"),
+                    meta: {
+                        auth: true,
+                    },
+                },
+                {
                     path: "/uikit/formlayout",
                     name: "formlayout",
                     component: () => import("@/views/uikit/FormLayout.vue"),

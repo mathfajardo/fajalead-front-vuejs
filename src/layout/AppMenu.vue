@@ -23,6 +23,11 @@ const model = ref([
                 to: "/fajalead/leads",
             },
             {
+                label: "Clientes",
+                icon: "pi pi-fw pi-id-card",
+                to: "/fajalead/clientes",
+            },
+            {
                 label: "Form Layout",
                 icon: "pi pi-fw pi-id-card",
                 to: "/uikit/formlayout",
