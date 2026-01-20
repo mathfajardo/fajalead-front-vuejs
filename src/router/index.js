@@ -1,4 +1,5 @@
 import AppLayout from "@/layout/AppLayout.vue";
+import { useAuth } from "@/stores/auth";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -12,11 +13,17 @@ const router = createRouter({
                     path: "/",
                     name: "dashboard",
                     component: () => import("@/views/Dashboard.vue"),
+                    meta: {
+                        auth: true,
+                    },
                 },
                 {
                     path: "/fajalead/leads",
                     name: "leads",
                     component: () => import("@/views/fajalead/Lead.vue"),
+                    meta: {
+                        auth: true,
+                    },
                 },
                 {
                     path: "/uikit/formlayout",
@@ -146,6 +153,28 @@ const router = createRouter({
             component: () => import("@/views/pages/auth/Error.vue"),
         },
     ],
+});
+
+router.beforeEach(async (to, from, next) => {
+    if (to.meta?.auth) {
+        const auth = useAuth();
+        if (auth.token) {
+            try {
+                const autenticado = await auth.checkToken();
+                if (autenticado) {
+                    next();
+                } else {
+                    next({ name: "login" });
+                }
+            } catch (error) {
+                next({ name: "login" });
+            }
+        } else {
+            next({ name: "login" });
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;
