@@ -63,11 +63,6 @@ async function login() {
                     style="border-radius: 53px"
                 >
                     <div class="text-center mb-8">
-                        <img
-                            src="/logo_shopb2b.jpeg"
-                            class="img-fluid mb-3"
-                            style="max-width: 150px; height: auto"
-                        />
                         <div
                             class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4"
                         >
