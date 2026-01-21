@@ -307,7 +307,7 @@ function getStatusLabel(status) {
         <Dialog
             v-model:visible="deleteProductDialog"
             :style="{ width: '450px' }"
-            header="Confirm"
+            header="Confirmação"
             :modal="true"
         >
             <div class="flex items-center gap-4">
