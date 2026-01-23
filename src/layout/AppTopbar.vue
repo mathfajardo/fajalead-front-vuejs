@@ -63,17 +63,14 @@ async function fazerLogout() {
                 </div>
             </div>
 
-            <div class="layout-topbar-menu hidden lg:block">
-                <div class="layout-topbar-menu-content">
-                    <button
-                        type="button"
-                        class="layout-topbar-action"
-                        @click="fazerLogout"
-                    >
-                        <i class="pi pi-sign-out text-red-500"></i>
-                        <span>Profile</span>
-                    </button>
-                </div>
+            <div class="layout-config-menu">
+                <button
+                    type="button"
+                    class="layout-topbar-action"
+                    @click="fazerLogout"
+                >
+                    <i class="pi pi-sign-out text-red-500"></i>
+                </button>
             </div>
         </div>
     </div>
