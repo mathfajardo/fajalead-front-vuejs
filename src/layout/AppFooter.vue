@@ -2,13 +2,10 @@
 
 <template>
     <div class="layout-footer">
-        SAKAI by
-        <a
-            href="https://primevue.org"
-            target="_blank"
+        <!-- Direitos reservados --> Designado por<span
             rel="noopener noreferrer"
-            class="text-primary font-bold hover:underline"
-            >PrimeVue</a
+            class="text-primary font-bold"
+            >FajaTech</span
         >
     </div>
 </template>
