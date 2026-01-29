@@ -22,10 +22,10 @@ const router = useRouter();
 
 // Controlar quantos leads mostrar por status
 let leadsVisiveisPorStatus = ref({
-    Novo: 3,
+    "Novo": 3,
     "Em atendimento": 3,
-    Perdido: 3,
-    Convertido: 3,
+    "Perdido": 3,
+    "Convertido": 3,
 });
 
 // Função para mostrar mais leads
@@ -110,10 +110,10 @@ function salvarLead() {
     );
 
     // caso o status seja para convertido, já envia para cadastro
-    if (leadSelecionado.value.status == "Convertido") {
-        router.push(`/clientecadastro/${leadSelecionado.value.id}`);
-        return;
-    }
+    // if (leadSelecionado.value.status == "Convertido") {
+    //     router.push(`/clientecadastro/${leadSelecionado.value.id}`);
+    //     return;
+    // }
 
     axiosInstance
         .put("/leads/" + leadSelecionado.value.id, leadSelecionado.value)
@@ -151,10 +151,10 @@ function moverLead(leadId, novoStatus, event) {
     lead.status = novoStatus;
 
     // caso o status seja para convertido, já envia para cadastro
-    if (novoStatus == "Convertido") {
-        router.push(`/clientecadastro/${leadId}`);
-        return;
-    }
+    // if (novoStatus == "Convertido") {
+    //     router.push(`/clientecadastro/${leadId}`);
+    //     return;
+    // }
 
     axiosInstance
         .put("/leads/" + leadId, lead)
@@ -192,27 +192,20 @@ const leadsPorStatus = computed(() => {
 
 // Nomes amigáveis para os status
 const nomesStatus = {
-    Novo: "Novos",
+    "Novo": "Novos",
     "Em atendimento": "Em Atendimento",
-    Perdido: "Perdidos",
+    "Perdido": "Perdidos",
     Convertido: "Convertidos",
 };
 
 // Cores para cada status
 const coresStatus = {
-    Novo: "bg-blue-600",
-    "Em atendimento": "bg-yellow-500",
-    Perdido: "bg-red-600",
-    Convertido: "bg-green-600",
+    "Novo": "bg-blue-400",
+    "Em atendimento": "bg-yellow-400",
+    "Perdido": "bg-red-400",
+    "Convertido": "bg-green-400",
 };
 
-// Opções para categoria (se necessário)
-const opcoesCategoria = ref([
-    "Cliente em Potencial",
-    "Cliente Atual",
-    "Cliente Inativo",
-    "Outro",
-]);
 </script>
 
 <template>
@@ -222,9 +215,8 @@ const opcoesCategoria = ref([
         v-if="carregamento"
     >
         <div
-            class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+            class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"
         ></div>
-        <span class="mt-4 text-gray-600">Aguarde...</span>
     </div>
 
     <div class="container mx-auto px-4" v-if="!carregamento">
@@ -326,7 +318,7 @@ const opcoesCategoria = ref([
                                                         class="pi pi-whatsapp text-lg"
                                                     ></i>
                                                 </a>
-                                                <div class="relative">
+                                                <div class="relative" v-if="lead.status != 'Convertido'">
                                                     <button
                                                         class="text-gray-400 hover:text-gray-600 p-1"
                                                         type="button"
@@ -459,6 +451,7 @@ const opcoesCategoria = ref([
                     optionValue="value"
                     placeholder="Selecione um Status"
                     fluid
+                    :disabled="leadSelecionado.status == 'Convertido'"
                 ></Select>
             </div>
         </div>
