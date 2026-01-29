@@ -22,7 +22,8 @@ let obj = ref({
     updated_at: ""
 });
 
-// 
+// carregamento
+let carregamento = ref(true);
 
 onMounted(() => {
     axiosInstance
@@ -36,6 +37,9 @@ onMounted(() => {
         })
         .catch((error) => {
             console.error("Erro: ", error);
+        })
+        .finally(() => {
+            carregamento.value = false;
         });
 });
 
@@ -65,23 +69,20 @@ function atualizar_mensagem() {
 </script>
 
 <template>
-    <Fluid>
+    <!-- tela de carregamento -->
+    <div class="flex flex-col justify-center items-center h-screen" v-if="carregamento">
+        <div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+    <Fluid v-if="!carregamento">
         <div class="flex mt-8">
             <div class="card flex flex-col gap-4 w-full">
                 <div class="flex flex-wrap">
                     <label for="address">Prompt da IA</label>
-                    <Textarea
-                        placeholder="Digite aqui o prompt..."
-                        rows="30"
-                        v-model="obj.mensagem"
-                    />
+                    <Textarea placeholder="Digite aqui o prompt..." rows="30" v-model="obj.mensagem" />
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-4">
-                    <Button
-                        label="Atualizar prompt"
-                        @click="atualizar_mensagem()"
-                    ></Button>
+                    <Button label="Atualizar prompt" @click="atualizar_mensagem()"></Button>
                 </div>
             </div>
         </div>

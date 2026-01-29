@@ -36,24 +36,22 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="grid grid-cols-12 gap-8">
+    <!-- tela de carregamento -->
+    <div class="flex flex-col justify-center items-center h-screen" v-if="carregamento">
+        <div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+    <div class="grid grid-cols-12 gap-8" v-if="!carregamento">
         <div class="col-span-12 lg:col-span-6 xl:col-span-3">
             <div class="card mb-0">
                 <div class="flex justify-between mb-4">
                     <div>
-                        <span class="block text-muted-color font-medium mb-4"
-                            >Leads no mês</span
-                        >
-                        <div
-                            class="text-surface-900 dark:text-surface-0 font-medium text-xl"
-                        >
+                        <span class="block text-muted-color font-medium mb-4">Leads no mês</span>
+                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
                             {{ totalLeadsMes }}
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
-                        style="width: 2.5rem; height: 2.5rem"
-                    >
+                    <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
+                        style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-users text-blue-500 text-xl!"></i>
                     </div>
                 </div>
@@ -63,19 +61,13 @@ onMounted(() => {
             <div class="card mb-0">
                 <div class="flex justify-between mb-4">
                     <div>
-                        <span class="block text-muted-color font-medium mb-4"
-                            >Clientes no mês</span
-                        >
-                        <div
-                            class="text-surface-900 dark:text-surface-0 font-medium text-xl"
-                        >
+                        <span class="block text-muted-color font-medium mb-4">Clientes no mês</span>
+                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
                             {{ totalClientesMes }}
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
-                        style="width: 2.5rem; height: 2.5rem"
-                    >
+                    <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
+                        style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-briefcase text-green-500 text-xl!"></i>
                     </div>
                 </div>
@@ -85,19 +77,13 @@ onMounted(() => {
             <div class="card mb-0">
                 <div class="flex justify-between mb-4">
                     <div>
-                        <span class="block text-muted-color font-medium mb-4"
-                            >Clientes no total</span
-                        >
-                        <div
-                            class="text-surface-900 dark:text-surface-0 font-medium text-xl"
-                        >
+                        <span class="block text-muted-color font-medium mb-4">Clientes no total</span>
+                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
                             {{ totalClientes }}
                         </div>
                     </div>
-                    <div
-                        class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
-                        style="width: 2.5rem; height: 2.5rem"
-                    >
+                    <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
+                        style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-id-card text-purple-500 text-xl!"></i>
                     </div>
                 </div>

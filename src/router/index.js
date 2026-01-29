@@ -43,6 +43,15 @@ const router = createRouter({
                     },
                 },
                 {
+                    path: "/fajalead/clientesCadastroLeads/:id",
+                    name: "clientescadastroleads",
+                    component: () =>
+                        import("@/views/fajalead/ClientesCadastroLeads.vue"),
+                    meta: {
+                        auth: true,
+                    },
+                },
+                {
                     path: "/fajalead/usuarios",
                     name: "usuarios",
                     component: () => import("@/views/fajalead/Usuarios.vue"),

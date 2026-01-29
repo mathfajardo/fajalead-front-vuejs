@@ -7,6 +7,8 @@ import { onMounted, ref } from "vue";
 // fajalead
 let usuarios = ref([]);
 
+let carregamento = ref(true);
+
 onMounted(() => {
     axiosInstance
         .get("/user/")
@@ -15,6 +17,9 @@ onMounted(() => {
         })
         .catch((error) => {
             console.error("Erro: ", error);
+        })
+        .finally(() => {
+            carregamento.value = false;
         });
 });
 
@@ -46,7 +51,7 @@ function formatarValor(valor) {
     });
 }
 
-function openNew() {}
+function openNew() { }
 
 function hideDialog() {
     productDialog.value = false;
@@ -174,7 +179,11 @@ function deleteSelectedProducts() {
 </script>
 
 <template>
-    <div>
+    <!-- tela de carregamento -->
+    <div class="flex flex-col justify-center items-center h-screen" v-if="carregamento">
+        <div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+    <div v-if="!carregamento">
         <div class="card">
             <Toolbar class="mb-6">
                 <template #start>
@@ -197,68 +206,31 @@ function deleteSelectedProducts() {
                 </template>
 
                 <template #end>
-                    <Button
-                        label="Exportar"
-                        icon="pi pi-upload"
-                        severity="secondary"
-                        @click="exportCSV($event)"
-                    />
+                    <Button label="Exportar" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
                 </template>
             </Toolbar>
 
-            <DataTable
-                ref="dt"
-                v-model:selection="selectedProducts"
-                :value="usuarios"
-                dataKey="id"
-                :paginator="true"
-                :rows="10"
-                :filters="filters"
+            <DataTable ref="dt" v-model:selection="selectedProducts" :value="usuarios" dataKey="id" :paginator="true"
+                :rows="10" :filters="filters"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
-                currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} usuarios"
-            >
+                currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} usuarios">
                 <template #header>
-                    <div
-                        class="flex flex-wrap gap-2 items-center justify-between"
-                    >
+                    <div class="flex flex-wrap gap-2 items-center justify-between">
                         <h4 class="m-0">Usuarios</h4>
                         <IconField>
                             <InputIcon>
                                 <i class="pi pi-search" />
                             </InputIcon>
-                            <InputText
-                                v-model="filters['global'].value"
-                                placeholder="Pesquisar..."
-                            />
+                            <InputText v-model="filters['global'].value" placeholder="Pesquisar..." />
                         </IconField>
                     </div>
                 </template>
 
-                <Column
-                    field="name"
-                    header="Nome do usuario"
-                    sortable
-                    style="min-width: 12rem"
-                ></Column>
-                <Column
-                    field="email"
-                    header="Email"
-                    sortable
-                    style="min-width: 16rem"
-                ></Column>
-                <Column
-                    field="created_at"
-                    header="Data de criação"
-                    sortable
-                    style="min-width: 10rem"
-                ></Column>
-                <Column
-                    field="updated_at"
-                    header="Ultima atualização"
-                    sortable
-                    style="min-width: 10rem"
-                >
+                <Column field="name" header="Nome do usuario" sortable style="min-width: 12rem"></Column>
+                <Column field="email" header="Email" sortable style="min-width: 16rem"></Column>
+                <Column field="created_at" header="Data de criação" sortable style="min-width: 10rem"></Column>
+                <Column field="updated_at" header="Ultima atualização" sortable style="min-width: 10rem">
                 </Column>
                 <!-- <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
@@ -281,53 +253,26 @@ function deleteSelectedProducts() {
             </DataTable>
         </div>
 
-        <Dialog
-            v-model:visible="deleteProductDialog"
-            :style="{ width: '450px' }"
-            header="Confirmação"
-            :modal="true"
-        >
+        <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirmação" :modal="true">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle text-3xl!" />
                 <span v-if="clientes">Tem certeza que deseja deletar?</span>
             </div>
             <template #footer>
-                <Button
-                    label="Não"
-                    icon="pi pi-times"
-                    text
-                    @click="deleteProductDialog = false"
-                />
+                <Button label="Não" icon="pi pi-times" text @click="deleteProductDialog = false" />
                 <Button label="Sim" icon="pi pi-check" @click="deleteProduct" />
             </template>
         </Dialog>
 
-        <Dialog
-            v-model:visible="deleteProductsDialog"
-            :style="{ width: '450px' }"
-            header="Confirm"
-            :modal="true"
-        >
+        <Dialog v-model:visible="deleteProductsDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle text-3xl!" />
-                <span v-if="product"
-                    >Are you sure you want to delete the selected
-                    products?</span
-                >
+                <span v-if="product">Are you sure you want to delete the selected
+                    products?</span>
             </div>
             <template #footer>
-                <Button
-                    label="No"
-                    icon="pi pi-times"
-                    text
-                    @click="deleteProductsDialog = false"
-                />
-                <Button
-                    label="Yes"
-                    icon="pi pi-check"
-                    text
-                    @click="deleteSelectedProducts"
-                />
+                <Button label="No" icon="pi pi-times" text @click="deleteProductsDialog = false" />
+                <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedProducts" />
             </template>
         </Dialog>
     </div>
