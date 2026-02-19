@@ -19,14 +19,14 @@
                     <i class="pi pi-fw pi-mobile text-4xl! text-purple-700"></i>
                 </div>
                 <div class="leading-none text-surface-900 dark:text-surface-0 text-3xl font-normal">Acompanhe pelo
-                    celular o seu diversos KPIs</div>
+                    celular a sua empresa com diversos KPIs</div>
                 <span class="text-surface-700 dark:text-surface-100 text-2xl leading-normal ml-0 md:ml-2"
                     style="max-width: 650px">No painel temos diversos relatórios para acompanhar o desempenho da sua IA,
                     assim tomando decisões certeiras em seu negócio.</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-12 gap-4 my-20 pt-2 md:pt-20">
+        <!-- <div class="grid grid-cols-12 gap-4 my-20 pt-2 md:pt-20">
             <div class="col-span-12 lg:col-span-6 my-auto flex flex-col text-center lg:text-left lg:items-start gap-4">
                 <div class="flex items-center justify-center bg-yellow-200 self-center lg:self-start"
                     style="width: 4.2rem; height: 4.2rem; border-radius: 10px">
@@ -44,6 +44,6 @@
                 style="border-radius: 8px">
                 <img src="/demo/images/landing/mockup-desktop.svg" class="w-11/12" alt="mockup" />
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
