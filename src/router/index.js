@@ -74,6 +74,11 @@ const router = createRouter({
             name: "login",
             component: () => import("@/views/fajalead/Login.vue"),
         },
+        {
+            path: "/landing",
+            name: "landing",
+            component: () => import("@/views/Landing.vue"),
+        },
     ],
 });
 
