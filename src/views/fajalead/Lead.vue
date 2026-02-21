@@ -18,7 +18,7 @@ const toast = useToast();
 // iniciando array dos leads
 let leads = ref([]);
 let leadsOriginal = ref([]);
-let termoPesquisa = ref([]);
+let termoPesquisa = ref("");
 
 const router = useRouter();
 
@@ -57,6 +57,43 @@ const temMaisLeads = (status) => {
     const visiveis = leadsVisiveisPorStatus.value[status];
     return visiveis < totalLeads;
 };
+
+
+// função para deltar o lead
+let deletarLeadModal = ref(false);
+const leadParaDeletar = ref(null);
+function confirmarDeletarLead(lead) {
+    leadParaDeletar.value = lead;
+    deletarLeadModal.value = true;
+}
+function deletarLead(id) {
+    axiosInstance.delete(`/leads/${id}`)
+        .then(response => {
+            leads.value = leads.value.filter(l => l.id !== id)
+            leadsOriginal.value = leadsOriginal.value.filter(l => l.id !== id)
+
+            deletarLeadModal.value = false;
+            leadParaDeletar.value = null;
+            modalVisivel.value = false;
+
+
+            toast.add({
+                severity: "success",
+                summary: "Sucesso",
+                detail: response.data.message,
+                life: 3000,
+            });
+        })
+        .catch((error) => {
+            console.error("Erro: ", error);
+            toast.add({
+                severity: "error",
+                summary: "Erro",
+                detail: "Lead não foi deletado",
+                life: 3000,
+            });
+        });
+}
 
 // carregando os leads
 onMounted(() => {
@@ -399,8 +436,23 @@ const coresStatus = {
         </div>
 
         <template #footer>
+            <Button icon="pi pi-trash" outlined rounded severity="danger"
+                @click="confirmarDeletarLead(leadSelecionado)" />
             <Button label="Cancelar" icon="pi pi-times" text @click="fecharModal" />
             <Button label="Salvar" icon="pi pi-check" @click="salvarLead" />
+        </template>
+    </Dialog>
+
+
+    <!-- modal para o delte de lead -->
+    <Dialog v-model:visible="deletarLeadModal" :style="{ width: '450px' }" header="Confirmação" :modal="true">
+        <div class="flex items-center gap-4">
+            <i class="pi pi-exclamation-triangle text-3xl!" />
+            <span v-if="leadParaDeletar">Tem certeza que deseja deletar {{ leadParaDeletar.nome }}?</span>
+        </div>
+        <template #footer>
+            <Button label="Não" icon="pi pi-times" text @click="deletarLeadModal = false" />
+            <Button label="Sim" icon="pi pi-check" @click="deletarLead(leadParaDeletar.id)" />
         </template>
     </Dialog>
 </template>
