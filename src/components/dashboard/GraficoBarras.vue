@@ -20,8 +20,8 @@ function setChartData() {
             {
                 label: "Leads por mes",
                 data: props.data.map(row => row.total),
-                borderColor: '#04c237',
-                backgroundColor: '#04c237'
+                borderColor: '#ADD8E6',
+                backgroundColor: '#ADD8E6'
             }
         ]
     };
